@@ -1,0 +1,20 @@
+{
+  "name": "laravel-multitenancy-schemas",
+  "version": "0.1",
+  "authors": [
+    "Nathan Dunn <me@ndunn.uk>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.3"
+  }
+}
