@@ -20,7 +20,7 @@ Route::group(['domain' => '{tenant}.pg.app'], function()
 	// 	if (count($tenant) > 0) {
 	// 		PGSchema::switchTo($tenant->subdomain);
 
-	// 		dd('switched');
+	//
 
 	// 		// Display login page
 	// 	}
@@ -58,8 +58,8 @@ Route::group(['prefix' => 'ajax'], function(){
 
 Route::group(['prefix' => 'auth'], function(){
 
-	Route::get('register', ['as' => 'auth-register', 'uses' => 'Auth\AuthController@getRegister']);
-	Route::post('register', ['as' => 'auth-register-send', 'uses' => 'Auth\AuthController@postRegister']);
+	Route::get('register', ['as' => 'auth-register', 'uses' => 'Auth\RegistrationController@getRegister']);
+	Route::post('register', ['as' => 'auth-register-send', 'uses' => 'Auth\RegistrationController@postRegister']);
 
 	Route::get('login', 'Auth\AuthController@getLogin');
 	Route::post('login','Auth\AuthController@authenticate');

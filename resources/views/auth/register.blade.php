@@ -28,12 +28,12 @@
 							</div>
 						</div>
 
-						<div class="form-group" id="company_url_group">
+						<div class="form-group" id="company_username_group">
 							<label class="col-md-4 control-label">Company Username</label>
 							<div class="col-md-6">
 							  	<input type="text" class="form-control" name="company_username" id="company_username">
-								<p class="help-block" id="already-exists">Domain already exists.</p>
-								<p class="help-block" id="letters-underscores">URLs can only contain letters and underscores.</p>
+								<p class="help-block" id="already-exists">Username already exists.</p>
+								<p class="help-block" id="letters-underscores">Usernames can only contain letters and underscores.</p>
 							</div>
 						</div>
 
@@ -96,8 +96,8 @@
 		$('button[type="submit"]').removeAttr('disabled');
 	}
 
-	var domainExists = $('#already-exists');
-	domainExists.hide();
+	var usernameExists = $('#already-exists');
+	usernameExists.hide();
 
 	var lettersUnderscores = $('#letters-underscores');
 	lettersUnderscores.hide();
@@ -106,9 +106,8 @@
 	var companyUsername 	= document.getElementById('company_username');
 	var reg	= /^[A-z]+$/;
 
-	companyUrl.addEventListener("keyup", function(){
-		//console.log(companyUrl.value + "\n");
-		var test = reg.test(companyUrl.value);
+	companyUsername.addEventListener("keyup", function(){
+		var test = reg.test(companyUsername.value);
 		if (test == false) {
 			lettersUnderscores.show();
 			enableError();
@@ -116,23 +115,23 @@
 			lettersUnderscores.hide();
 			disableError();
 
-			companyUsernamelVal = companyUrl.value;
+			companyUsernameVal = companyUsername.value;
 
 			var prepPost = {
 				'_token': $('#token').val(),
-				'company_username': companyUrlVal
+				'company_username': companyUsernameVal
 			};
 
 			setTimeout(function() {
 				$.post("/ajax/name-available", prepPost)
 					.done(function(result){
 						var returnedVal = $.parseJSON(result);
-						console.log(returnedVal);
+
 						if (returnedVal == true) {
-							domainExists.show();
+							usernameExists.show();
 							enableError();
 						}else{
-							domainExists.hide()
+							usernameExists.hide()
 							disableError();;
 						}
 					});
