@@ -11,11 +11,64 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::group(['domain' => '{tenant}.pg.app'], function()
+{
 
-Route::get('home', 'HomeController@index');
+	// Route::get('/', function($account){
+	// 	$tenant = App\Tenant::where('subdomain', $account)->first();
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+	// 	if (count($tenant) > 0) {
+	// 		PGSchema::switchTo($tenant->subdomain);
+
+	// 		dd('switched');
+
+	// 		// Display login page
+	// 	}
+
+	// });
+
+});
+
+
+Route::get('/', function(){
+	return View::make('welcome');
+});
+
+Route::get('/home', 'HomeController@index');
+
+
+Route::group(['prefix' => 'ajax'], function(){
+
+	Route::post('name-available', function(){
+		
+		$url = Request::get('company_username');
+		$tenant = App\Tenant::where('schema_name', $url)->count();
+
+		if ($tenant > 0) {
+			return response()->json(['true']);
+		}else{
+			return response()->json(['false']);
+		}
+
+	});
+
+});
+
+
+
+Route::group(['prefix' => 'auth'], function(){
+
+	Route::get('register', ['as' => 'auth-register', 'uses' => 'Auth\AuthController@getRegister']);
+	Route::post('register', ['as' => 'auth-register-send', 'uses' => 'Auth\AuthController@postRegister']);
+
+	Route::get('login', 'Auth\AuthController@getLogin');
+	Route::post('login','Auth\AuthController@authenticate');
+	
+	Route::get('logout','Auth\AuthController@logout');
+
+});
+
+// Route::controllers([
+// 	'auth' => 'Auth\AuthController',
+// 	'password' => 'Auth\PasswordController',
+// ]);
