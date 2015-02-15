@@ -47,7 +47,7 @@ class RegistrationController extends Controller{
 
 		\PGSchema::create($data['company_username']);
 		
-		$this->doMigrations($data)
+		$this->doMigrations($data);
 
 		return $tenant->id; 
 	}
